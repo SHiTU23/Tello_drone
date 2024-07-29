@@ -1,0 +1,1 @@
+Images will be saved here by running this [script](../src/control_and_capture.py) and pressing `s` key on the keyboard.
