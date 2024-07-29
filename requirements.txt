@@ -1,5 +1,6 @@
 av==12.3.0
 djitellopy==2.5.0
+keyboard==0.13.5
 numpy==1.26.4
 opencv-python==4.10.0.84
 pillow==10.4.0
