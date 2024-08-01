@@ -16,45 +16,52 @@ def key_press():
     global save_pic
     global running
     global last_key
+    landed = True
     rotation_degree = 10
     movement_distance = 20 ## in cm
     
     while running:
-        print("KEY_ PRESSES**********")
+        # print("KEY_ PRESSES**********")
         if keyboard.is_pressed('s') :
             print("Save pic state changed")
             save_pic = True
             skip_holdDown_key('s')
 
-        elif keyboard.is_pressed('q'):
+        elif keyboard.is_pressed('q') or keyboard.is_pressed('down'):
+            if landed == False:
+                tello.land()
             print("break the loop")
             running = False
+
         ############ CONTROL COMMANDS ############
         ##########################################
         elif keyboard.is_pressed('up'):
+            landed = False
             tello.takeoff()
-            #skip_holdDown_key('up')
-        elif keyboard.is_pressed('down'):
-            tello.land()
-            #skip_holdDown_key('down')
+            
         elif keyboard.is_pressed('right'):
             tello.rotate_clockwise(rotation_degree)
-            #skip_holdDown_key('right')
+            
         elif keyboard.is_pressed('left'):
             tello.rotate_counter_clockwise(rotation_degree)
-            #skip_holdDown_key('left')
-        elif keyboard.is_pressed('w'):  ### move forward
+            
+        elif keyboard.is_pressed('w'):  ### move forward 20 cm
             tello.move_forward(movement_distance)
-            #skip_holdDown_key('w')
-        elif keyboard.is_pressed('z'):  ### move backward
+            
+        elif keyboard.is_pressed('z'):  ### move backward 20 cm
             tello.move_back(movement_distance)
-            #skip_holdDown_key("z")
-        elif keyboard.is_pressed('a'):  ### move to the left
+            
+        elif keyboard.is_pressed('a'):  ### move to the left 20 cm
             tello.move_left(movement_distance)
-            #skip_holdDown_key('a')
-        elif keyboard.is_pressed('d'):  ### move to the right
+            
+        elif keyboard.is_pressed('d'):  ### move to the right 20 cm
             tello.move_right(movement_distance)
-            #skip_holdDown_key("d")
+            
+        elif keyboard.is_pressed('r'):  ### move to up 20 cm
+            tello.move_up(movement_distance)
+
+        elif keyboard.is_pressed('c'):  ### move to down 20 cm
+            tello.move_down(movement_distance)
 
 
 
@@ -83,11 +90,12 @@ def stream_camera():
             last_key = ''
             save_pic = False
             counter += 1
-            picture_name = './pics/pic' + str(counter) + '.jpg'
+            picture_name = './pics/set7pic' + str(counter) + '.jpg'
             print("PICTURE SAVED",picture_name)
             cv2.imwrite(picture_name, frame)
             
-            
+        if cv2.waitKey(1) & 0xFF==ord('q'):
+            running = False
             
         
 
